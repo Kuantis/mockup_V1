@@ -68,7 +68,7 @@ function login(e) {
     el.style.display = u === 'socio' ? 'flex' : 'none';
   });
 
-  if (u === 'socio') cargarChatSoporteSocio();
+  if (u === 'socio') mostrarChatSoporteSocio(); else ocultarChatSoporteSocio();
 
   renderView('dashboard');
   return false;
@@ -79,35 +79,26 @@ function logout() {
   document.getElementById('app').style.display = 'none';
   document.getElementById('loginScreen').style.display = 'flex';
   document.getElementById('loginForm').reset();
-  quitarChatSoporteSocio();
+  ocultarChatSoporteSocio();
 }
 
 /* ============ CHAT DE SOPORTE (Tawk.to) — para que cada socio atienda a sus propios clientes ============
-   Se carga dinámicamente tras el login como socio, en su panel personal. No aparece en la pantalla
-   de acceso ni en la cuenta admin — es una herramienta de atención al cliente de cada asociado, no
+   El script de Tawk.to ya está insertado en mockup2.html (oculto por defecto vía Tawk_API.onLoad).
+   Aquí solo se controla su visibilidad: se muestra al iniciar sesión como socio, se oculta para
+   admin o al cerrar sesión. Es una herramienta de atención al cliente de cada asociado, no
    soporte técnico de la plataforma. */
-function cargarChatSoporteSocio() {
-  if (document.getElementById('tawkto-script')) return;
-  window.Tawk_API = window.Tawk_API || {};
-  window.Tawk_LoadStart = new Date();
-  var s1 = document.createElement('script');
-  s1.id = 'tawkto-script';
-  s1.type = 'text/javascript';
-  s1.async = true;
-  s1.src = 'https://embed.tawk.to/6aa33a7f406bce344a95cd7d/1k26pp0em';
-  s1.charset = 'UTF-8';
-  s1.setAttribute('crossorigin', '*');
-  document.body.appendChild(s1);
+function mostrarChatSoporteSocio() {
+  if (window.Tawk_API && typeof window.Tawk_API.showWidget === 'function') {
+    window.Tawk_API.showWidget();
+  } else if (window.Tawk_API) {
+    window.Tawk_API.onLoad = function () { window.Tawk_API.showWidget(); };
+  }
 }
 
-function quitarChatSoporteSocio() {
-  var script = document.getElementById('tawkto-script');
-  if (script) script.remove();
+function ocultarChatSoporteSocio() {
   if (window.Tawk_API && typeof window.Tawk_API.hideWidget === 'function') {
     window.Tawk_API.hideWidget();
   }
-  var widget = document.querySelector('iframe[title*="chat" i], iframe[src*="tawk.to"]');
-  if (widget && widget.parentElement) widget.parentElement.remove();
 }
 
 /* ============ NAVEGACIÓN ============ */
