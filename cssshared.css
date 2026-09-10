@@ -1,0 +1,129 @@
+/* ============ VARIABLES ============ */
+:root {
+  --primary: #0a7d3e;
+  --primary-dark: #05602c;
+  --primary-light: #e8f7ee;
+  --accent: #25D366;
+  --accent-dark: #128C7E;
+  --dark: #0f172a;
+  --gray: #64748b;
+  --gray-light: #f8fafc;
+  --border: #e2e8f0;
+  --white: #ffffff;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 1px 3px rgba(15,23,42,.06), 0 1px 2px rgba(15,23,42,.04);
+  --shadow: 0 4px 16px rgba(15,23,42,.06);
+  --shadow-lg: 0 20px 40px rgba(15,23,42,.10);
+  --shadow-hover: 0 16px 32px rgba(15,23,42,.12);
+  --transition: cubic-bezier(.4,0,.2,1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: var(--dark);
+  background: var(--gray-light);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* ============ HEADER ============ */
+.main-header {
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(226,232,240,.6);
+  position: sticky; top: 0; z-index: 100;
+}
+.header-inner {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 24px;
+}
+.logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; font-weight: 800; font-size: 1.15rem;
+  color: var(--primary); letter-spacing: -.02em;
+}
+.logo i { font-size: 1.5rem; }
+.logo small { font-size: .68rem; color: var(--gray); font-weight: 500; letter-spacing: .05em; }
+
+nav { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+nav a {
+  text-decoration: none; color: var(--dark);
+  font-weight: 500; font-size: .9rem;
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 14px; border-radius: var(--radius-pill);
+  transition: all .2s var(--transition);
+}
+nav a:hover { background: var(--primary-light); color: var(--primary); }
+
+/* ============ BOTONES ============ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 20px; border-radius: var(--radius-pill);
+  border: none; cursor: pointer; font-weight: 600;
+  font-size: .9rem; transition: all .2s var(--transition);
+  text-decoration: none; font-family: inherit;
+}
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(10,125,62,.25); }
+.btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--dark); }
+.btn-outline:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+.btn-whatsapp { background: var(--accent); color: #fff; }
+.btn-whatsapp:hover { background: var(--accent-dark); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(37,211,102,.35); }
+.btn-sm { padding: 7px 14px; font-size: .82rem; }
+.btn-block { width: 100%; }
+
+/* ============ FOOTER ============ */
+.main-footer { background: var(--dark); color: #cbd5e1; padding: 50px 24px 24px; margin-top: 80px; }
+.main-footer .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
+.main-footer h4 { color: #fff; margin-bottom: 14px; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+.main-footer a { color: #cbd5e1; text-decoration: none; display: block; margin-bottom: 8px; font-size: .9rem; transition: color .2s; }
+.main-footer a:hover { color: var(--accent); }
+.footer-bottom { text-align: center; padding-top: 24px; margin-top: 40px; border-top: 1px solid #1e293b; font-size: .85rem; color: #94a3b8; }
+
+/* ============ BADGES ============ */
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 12px; border-radius: var(--radius-pill);
+  font-size: .74rem; font-weight: 600; letter-spacing: .01em;
+}
+.badge-green { background: var(--primary-light); color: var(--primary-dark); }
+.badge-orange { background: #fff4e0; color: #b56d00; }
+
+/* ============ BOTÓN FLOTANTE WHATSAPP ============ */
+.whatsapp-float {
+  position: fixed; bottom: 24px; right: 24px;
+  background: var(--accent); color: #fff;
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 20px; border-radius: var(--radius-pill);
+  text-decoration: none; font-weight: 600; font-size: .9rem;
+  box-shadow: 0 10px 25px rgba(37,211,102,.4);
+  z-index: 999; transition: all .3s var(--transition);
+  animation: pulseWA 2.5s infinite;
+}
+.whatsapp-float i { font-size: 1.4rem; }
+.whatsapp-float:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 15px 35px rgba(37,211,102,.5); animation: none; }
+
+@keyframes pulseWA {
+  0%, 100% { box-shadow: 0 10px 25px rgba(37,211,102,.4); }
+  50% { box-shadow: 0 10px 25px rgba(37,211,102,.4), 0 0 0 12px rgba(37,211,102,.15); }
+}
+
+@media (max-width: 700px) {
+  .header-inner { flex-direction: column; gap: 12px; padding: 12px; }
+  nav { gap: 4px; justify-content: center; }
+  nav a { padding: 6px 10px; font-size: .82rem; }
+}
+@media (max-width: 500px) {
+  .whatsapp-float-text { display: none; }
+  .whatsapp-float { padding: 16px; border-radius: 50%; }
+  .whatsapp-float i { font-size: 1.5rem; }
+}
