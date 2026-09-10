@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Página del negocio · ASOTRÁNSITO AMB</title>
+<meta name="description" content="Página personal de negocio de un socio de ASOTRÁNSITO AMB.">
+<link rel="stylesheet" href="css/shared.css">
+<link rel="stylesheet" href="css/perfil.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="perfil-body">
+
+<div class="propuesta-banner propuesta-2">
+  <i class="fa-solid fa-sliders"></i>
+  <span>MOCKUP · PROPUESTA 2 — Página personal generada por la Plataforma Interna</span>
+</div>
+
+<div id="perfilContenido">
+  <!-- Se rellena por JS según ?socio= en la URL -->
+</div>
+
+<footer class="perfil-footer">
+  <p>Página generada automáticamente por la Plataforma Interna de <strong>ASOTRÁNSITO AMB</strong></p>
+  <a href="index.html"><i class="fa-solid fa-house"></i> Ver todo el proyecto</a>
+</footer>
+
+<div class="dev-credit">
+  <p>Desarrollado por <strong>Jesus Zappa</strong> · Ingeniero de Sistemas</p>
+  <div class="dev-credit-links">
+    <a href="https://wa.me/573167648439" target="_blank"><i class="fa-brands fa-whatsapp"></i> 316 764 8439</a>
+    <a href="https://kuantis.github.io/.dev/" target="_blank"><i class="fa-solid fa-globe"></i> kuantis.github.io/.dev</a>
+  </div>
+</div>
+
+<script src="js/socios-data.js"></script>
+<script>
+function abrirWhatsAppSocio(numero, negocio) {
+  const msg = `Hola, buen día. Vi tu página de ${negocio} en ASOTRÁNSITO AMB y quisiera más información.`;
+  window.open(`https://wa.me/57${numero}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+(function renderPerfil() {
+  const params = new URLSearchParams(location.search);
+  const slug = params.get('socio');
+  const cont = document.getElementById('perfilContenido');
+  const socio = slug && SOCIOS_DB[slug];
+
+  if (!socio) {
+    cont.innerHTML = `
+      <div class="perfil-vacio">
+        <i class="fa-solid fa-circle-question"></i>
+        <h1>Página no encontrada</h1>
+        <p>Este link no corresponde a ningún socio publicado, o falta el parámetro <code>?socio=</code> en la URL.</p>
+        <p class="perfil-ejemplo">Prueba con: <a href="perfil.html?socio=juan-perez">perfil.html?socio=juan-perez</a></p>
+      </div>
+    `;
+    return;
+  }
+
+  cont.innerHTML = `
+    <header class="perfil-hero">
+      <img class="perfil-avatar" src="https://ui-avatars.com/api/?name=${encodeURIComponent(socio.negocio)}&background=0a7d3e&color=fff&size=128" alt="">
+      <h1>${socio.negocio}</h1>
+      <p class="perfil-nombre-socio"><i class="fa-solid fa-user"></i> ${socio.nombre} · <i class="fa-solid fa-location-dot"></i> ${socio.ciudad}</p>
+      <p class="perfil-descripcion">${socio.descripcion}</p>
+      <button class="btn btn-whatsapp btn-lg" onclick="abrirWhatsAppSocio('${socio.redes.whatsapp}', '${socio.negocio.replace(/'/g, "\\'")}')">
+        <i class="fa-brands fa-whatsapp"></i> Escribir por WhatsApp
+      </button>
+    </header>
+
+    <section class="perfil-seccion">
+      <h2><i class="fa-solid fa-screwdriver-wrench"></i> Servicios</h2>
+      <div class="perfil-servicios">
+        ${socio.servicios.map(s => `
+          <div class="perfil-servicio-card">
+            <i class="fa-solid fa-check-circle"></i>
+            <div>
+              <strong>${s.nombre}</strong>
+              <small>${s.precio}</small>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </section>
+
+    <section class="perfil-seccion">
+      <h2><i class="fa-solid fa-location-dot"></i> Sedes</h2>
+      <div class="perfil-sedes">
+        ${socio.sedes.map(s => `
+          <div class="perfil-sede-card">
+            <i class="fa-solid fa-building"></i>
+            <div>
+              <strong>${s.nombre}</strong>
+              <small>${s.dir}</small>
+              <small><i class="fa-regular fa-clock"></i> ${s.horario}</small>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </section>
+
+    <section class="perfil-seccion">
+      <h2><i class="fa-solid fa-share-nodes"></i> Redes sociales</h2>
+      <div class="perfil-redes">
+        ${socio.redes.facebook ? `<a href="https://${socio.redes.facebook}" target="_blank"><i class="fa-brands fa-facebook"></i> Facebook</a>` : ''}
+        ${socio.redes.instagram ? `<a href="https://instagram.com/${socio.redes.instagram.replace('@','')}" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a>` : ''}
+      </div>
+    </section>
+  `;
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASOTRÁNSITO AMB · Mockups del Proyecto</title>
+<meta name="description" content="Mockups del portal web y plataforma interna de la Asociación de Tramitadores de Tránsito y Transporte del Área Metropolitana de Bucaramanga.">
+<link rel="stylesheet" href="css/shared.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  .portada { padding: 70px 24px; max-width: 1100px; margin: 0 auto; }
+  .portada h1 { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800; letter-spacing: -.03em; color: var(--dark); margin-bottom: 14px; }
+  .portada h1 span { color: var(--primary); }
+  .portada > p { color: var(--gray); font-size: 1.05rem; max-width: 720px; margin-bottom: 50px; }
+  .cards-portada { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 26px; }
+  .card-portada {
+    background: #fff; border-radius: var(--radius); padding: 40px 32px;
+    box-shadow: var(--shadow-sm); transition: all .3s var(--transition);
+    border: 1px solid var(--border); position: relative; overflow: hidden;
+  }
+  .card-portada::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    transform: scaleX(0); transform-origin: left; transition: transform .4s var(--transition);
+  }
+  .card-portada:hover { transform: translateY(-6px); box-shadow: var(--shadow-hover); }
+  .card-portada:hover::before { transform: scaleX(1); }
+  .card-icon {
+    width: 60px; height: 60px; border-radius: 16px;
+    background: var(--primary-light); color: var(--primary);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.7rem; margin-bottom: 22px;
+  }
+  .card-portada h2 { color: var(--dark); margin-bottom: 12px; font-size: 1.3rem; letter-spacing: -.02em; }
+  .card-portada p { color: var(--gray); margin-bottom: 26px; font-size: .95rem; line-height: 1.6; }
+  .card-portada .btn { width: 100%; }
+  .footer-portada { text-align: center; padding: 40px 20px; color: var(--gray); font-size: .88rem; }
+</style>
+</head>
+<body>
+
+<header class="main-header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">
+      <i class="fa-solid fa-car-side"></i>
+      <span>ASOTRÁNSITO <small>AMB</small></span>
+    </a>
+    <nav>
+      <a href="mockup1.html"><i class="fa-solid fa-globe"></i> Portal Público</a>
+      <a href="mockup2.html"><i class="fa-solid fa-gauge"></i> Plataforma</a>
+      <a href="comparacion.html"><i class="fa-solid fa-chart-line"></i> Comparación</a>
+      <a href="https://wa.me/573193053012" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+    </nav>
+  </div>
+</header>
+
+<main class="portada">
+  <h1>Mockups del <span>Proyecto Web</span></h1>
+  <p>Asociación de Tramitadores de Tránsito y Transporte del Área Metropolitana de Bucaramanga, Santander. Dos prototipos funcionales: el portal público y la plataforma interna para socios.</p>
+
+  <div class="cards-portada">
+    <div class="card-portada">
+      <div class="card-icon"><i class="fa-solid fa-store"></i></div>
+      <h2>Mockup 1 · Portal Público</h2>
+      <p>Directorio de tramitadores con búsqueda por ciudad y trámite. Cada socio con sus sedes, contacto, redes sociales y botón de WhatsApp directo a la central de la asociación. Incluye blog de eventos.</p>
+      <a href="mockup1.html" class="btn btn-primary">Ver Portal Público <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+
+    <div class="card-portada">
+      <div class="card-icon"><i class="fa-solid fa-sliders"></i></div>
+      <h2>Mockup 2 · Plataforma Interna</h2>
+      <p>Panel con login para socios y administradores. Personalización de perfil, negocio, servicios y sedes. El admin gestiona usuarios y publica eventos en el blog.</p>
+      <a href="mockup2.html" class="btn btn-primary">Ver Plataforma <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+
+    <div class="card-portada">
+      <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
+      <h2>Análisis Comercial</h2>
+      <p>Comparativa detallada: costos, ROI, funcionalidades, argumentos de venta, proyecciones a 12 meses e integraciones futuras. Todo lo que necesitas para tomar la decisión correcta.</p>
+      <a href="comparacion.html" class="btn btn-primary">Ver Análisis Comercial <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+  </div>
+</main>
+
+<footer class="footer-portada">
+  © 2025 ASOTRÁNSITO AMB · Mockup de demostración · Bucaramanga, Santander 🇨🇴
+</footer>
+
+<div class="dev-credit">
+  <p>Desarrollado por <strong>Jesus Zappa</strong> · Ingeniero de Sistemas</p>
+  <div class="dev-credit-links">
+    <a href="https://wa.me/573167648439" target="_blank"><i class="fa-brands fa-whatsapp"></i> 316 764 8439</a>
+    <a href="https://kuantis.github.io/.dev/" target="_blank"><i class="fa-solid fa-globe"></i> kuantis.github.io/.dev</a>
+  </div>
+</div>
+
+</body>
+</html>

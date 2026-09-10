@@ -1,0 +1,86 @@
+/* ============ PÁGINA PERSONAL DE SOCIO (LANDING PÚBLICA) ============ */
+.perfil-body { background: var(--gray-light); }
+
+.perfil-hero {
+  text-align: center;
+  padding: 60px 24px 40px;
+  background: linear-gradient(135deg, var(--primary-light), #fff);
+  border-bottom: 1px solid var(--border);
+}
+.perfil-avatar {
+  width: 96px; height: 96px; border-radius: 50%;
+  margin: 0 auto 18px; box-shadow: var(--shadow-lg);
+  border: 4px solid #fff;
+}
+.perfil-hero h1 {
+  font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800;
+  color: var(--dark); letter-spacing: -.02em; margin-bottom: 8px;
+}
+.perfil-nombre-socio {
+  color: var(--gray); font-size: .95rem; margin-bottom: 16px;
+}
+.perfil-nombre-socio i { color: var(--primary); margin-right: 4px; }
+.perfil-descripcion {
+  max-width: 560px; margin: 0 auto 24px; color: var(--gray);
+  line-height: 1.6; font-size: 1rem;
+}
+.btn-lg { padding: 14px 28px; font-size: 1rem; }
+
+.perfil-seccion {
+  max-width: 800px; margin: 0 auto; padding: 36px 24px;
+  border-bottom: 1px solid var(--border);
+}
+.perfil-seccion h2 {
+  font-size: 1.25rem; font-weight: 700; color: var(--dark);
+  margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+}
+.perfil-seccion h2 i { color: var(--primary); }
+
+.perfil-servicios {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px;
+}
+.perfil-servicio-card {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: #fff; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 16px;
+}
+.perfil-servicio-card i { color: var(--primary); font-size: 1.2rem; margin-top: 2px; }
+.perfil-servicio-card strong { display: block; color: var(--dark); margin-bottom: 4px; }
+.perfil-servicio-card small { color: var(--gray); font-size: .85rem; }
+
+.perfil-sedes {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px;
+}
+.perfil-sede-card {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: #fff; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 16px;
+}
+.perfil-sede-card i { color: var(--primary); font-size: 1.3rem; margin-top: 2px; }
+.perfil-sede-card strong { display: block; color: var(--dark); margin-bottom: 4px; }
+.perfil-sede-card small { display: block; color: var(--gray); font-size: .85rem; }
+
+.perfil-redes { display: flex; gap: 14px; flex-wrap: wrap; }
+.perfil-redes a {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #fff; border: 1px solid var(--border); border-radius: var(--radius-pill);
+  padding: 10px 18px; text-decoration: none; color: var(--dark); font-weight: 600; font-size: .9rem;
+  transition: all .25s var(--transition);
+}
+.perfil-redes a:hover { border-color: var(--primary); color: var(--primary); }
+
+.perfil-vacio {
+  text-align: center; padding: 100px 24px; max-width: 480px; margin: 0 auto;
+}
+.perfil-vacio i { font-size: 3rem; color: var(--gray); margin-bottom: 20px; }
+.perfil-vacio h1 { font-size: 1.4rem; color: var(--dark); margin-bottom: 12px; }
+.perfil-vacio p { color: var(--gray); line-height: 1.6; margin-bottom: 8px; }
+.perfil-ejemplo a { color: var(--primary); font-weight: 600; }
+
+.perfil-footer {
+  text-align: center; padding: 30px 20px; color: var(--gray); font-size: .85rem;
+}
+.perfil-footer a {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 8px;
+  color: var(--primary); text-decoration: none; font-weight: 600;
+}

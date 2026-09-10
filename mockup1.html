@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASOTRÁNSITO AMB · Encuentra tu Tramitador</title>
+<meta name="description" content="Directorio de tramitadores de tránsito y transporte del Área Metropolitana de Bucaramanga. Filtra por ciudad y trámite.">
+<link rel="stylesheet" href="css/shared.css">
+<link rel="stylesheet" href="css/mockup1.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<header class="main-header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">
+      <i class="fa-solid fa-car-side"></i>
+      <span>ASOTRÁNSITO <small>AMB</small></span>
+    </a>
+    <nav>
+      <a href="index.html"><i class="fa-solid fa-house"></i> Inicio</a>
+      <a href="#directorio"><i class="fa-solid fa-users"></i> Directorio</a>
+      <a href="#blog"><i class="fa-solid fa-newspaper"></i> Blog</a>
+      <a href="#contacto"><i class="fa-solid fa-envelope"></i> Contacto</a>
+      <a href="comparacion.html"><i class="fa-solid fa-chart-line"></i> Comparación</a>
+      <a href="mockup2.html" class="btn btn-primary btn-sm"><i class="fa-solid fa-right-to-bracket"></i> Acceso Socios</a>
+    </nav>
+  </div>
+</header>
+
+<!-- IDENTIFICADOR DE PROPUESTA -->
+<div class="propuesta-banner propuesta-1">
+  <div class="container">
+    <i class="fa-solid fa-globe"></i>
+    <span>MOCKUP · PROPUESTA 1 — Portal Público</span>
+  </div>
+</div>
+
+<!-- HERO + BUSCADOR -->
+<section class="hero">
+  <div class="container">
+    <h1>Encuentra tu <span>tramitador de confianza</span></h1>
+    <p>Área Metropolitana de Bucaramanga · Bucaramanga · Floridablanca · Girón · Piedecuesta</p>
+
+    <div class="search-box">
+      <div class="search-field">
+        <i class="fa-solid fa-location-dot"></i>
+        <select id="filtroCiudad">
+          <option value="">Todas las ciudades</option>
+          <option>Bucaramanga</option>
+          <option>Floridablanca</option>
+          <option>Girón</option>
+          <option>Piedecuesta</option>
+        </select>
+      </div>
+      <div class="search-field">
+        <i class="fa-solid fa-file-signature"></i>
+        <select id="filtroTramite">
+          <option value="">Todos los trámites</option>
+          <option>Traspaso</option>
+          <option>Matrícula</option>
+          <option>Licencia</option>
+          <option>Comparendos</option>
+          <option>Duplicados</option>
+        </select>
+      </div>
+      <div class="search-field">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="filtroTexto" placeholder="Buscar por nombre o negocio...">
+      </div>
+      <button class="btn btn-primary" id="btnBuscar"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
+    </div>
+  </div>
+</section>
+
+<!-- DIRECTORIO -->
+<section class="directorio container" id="directorio">
+  <div class="directorio-header">
+    <h2>Directorio de Socios</h2>
+    <span id="contadorResultados" class="badge badge-green">0 socios</span>
+  </div>
+
+  <div class="grid-socios" id="gridSocios"></div>
+
+  <p id="sinResultados" class="sin-resultados" style="display:none;">
+    <i class="fa-solid fa-circle-info"></i> No se encontraron tramitadores con esos filtros.
+  </p>
+</section>
+
+<!-- BLOG -->
+<section class="blog container" id="blog">
+  <h2><i class="fa-solid fa-newspaper"></i> Blog de Eventos y Encuentros</h2>
+  <div class="grid-blog">
+    <article class="blog-card">
+      <div class="blog-img" style="background: linear-gradient(135deg,#0a7d3e,#05602c);">
+        <i class="fa-solid fa-people-group"></i>
+      </div>
+      <div class="blog-body">
+        <span class="badge badge-orange">Encuentro</span>
+        <h3>Encuentro Regional de Tramitadores 2025</h3>
+        <p>Más de 80 socios se reunieron para discutir nuevas normativas del RUNT y las mejoras del gremio.</p>
+        <span class="blog-date"><i class="fa-regular fa-calendar"></i> 15 de marzo, 2025</span>
+      </div>
+    </article>
+    <article class="blog-card">
+      <div class="blog-img" style="background: linear-gradient(135deg,#f5a623,#d68910);">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      <div class="blog-body">
+        <span class="badge badge-orange">Capacitación</span>
+        <h3>Capacitación Virtual sobre RUNT 2.0</h3>
+        <p>Jornada de formación para socios sobre las nuevas actualizaciones del sistema y buenas prácticas.</p>
+        <span class="blog-date"><i class="fa-regular fa-calendar"></i> 02 de febrero, 2025</span>
+      </div>
+    </article>
+    <article class="blog-card">
+      <div class="blog-img" style="background: linear-gradient(135deg,#0f172a,#1e293b);">
+        <i class="fa-solid fa-handshake"></i>
+      </div>
+      <div class="blog-body">
+        <span class="badge badge-orange">Asamblea</span>
+        <h3>Asamblea General Ordinaria 2025</h3>
+        <p>Rendición de cuentas, elección de junta directiva y presentación del plan estratégico anual.</p>
+        <span class="blog-date"><i class="fa-regular fa-calendar"></i> 20 de enero, 2025</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalSocio">
+  <div class="modal">
+    <div id="modalContenido"></div>
+  </div>
+</div>
+
+<!-- BOTÓN FLOTANTE WHATSAPP INSTITUCIONAL -->
+<a href="https://wa.me/573193053012?text=Hola%20buen%20d%C3%ADa%2C%20vengo%20desde%20la%20p%C3%A1gina%20de%20ASOTR%C3%81NSITO%20AMB%20y%20quisiera%20m%C3%A1s%20informaci%C3%B3n."
+   target="_blank"
+   class="whatsapp-float"
+   aria-label="Contactar por WhatsApp">
+  <i class="fa-brands fa-whatsapp"></i>
+  <span class="whatsapp-float-text">¿Necesitas ayuda?</span>
+</a>
+
+<!-- FOOTER -->
+<footer class="main-footer" id="contacto">
+  <div class="container">
+    <div>
+      <h4><i class="fa-solid fa-car-side"></i> ASOTRÁNSITO AMB</h4>
+      <p>Asociación de Tramitadores de Tránsito y Transporte del Área Metropolitana de Bucaramanga.</p>
+    </div>
+    <div>
+      <h4>Secciones</h4>
+      <a href="#directorio">Directorio de Socios</a>
+      <a href="#blog">Blog de Eventos</a>
+      <a href="mockup2.html">Acceso Socios</a>
+    </div>
+    <div>
+      <h4>Contacto Oficial</h4>
+      <a href="https://wa.me/573193053012" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i> Escríbenos por WhatsApp
+      </a>
+      <a href="mailto:info@asotransitoamb.org"><i class="fa-solid fa-envelope"></i> info@asotransitoamb.org</a>
+      <a href="#"><i class="fa-solid fa-location-dot"></i> Bucaramanga, Santander</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2025 ASOTRÁNSITO AMB · Mockup de demostración · Bucaramanga, Santander 🇨🇴
+  </div>
+</footer>
+
+<div class="dev-credit">
+  <p>Desarrollado por <strong>Jesus Zappa</strong> · Ingeniero de Sistemas</p>
+  <div class="dev-credit-links">
+    <a href="https://wa.me/573167648439" target="_blank"><i class="fa-brands fa-whatsapp"></i> 316 764 8439</a>
+    <a href="https://kuantis.github.io/.dev/" target="_blank"><i class="fa-solid fa-globe"></i> kuantis.github.io/.dev</a>
+  </div>
+</div>
+
+<script src="js/mockup1.js"></script>
+</body>
+</html>
