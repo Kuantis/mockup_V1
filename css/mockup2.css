@@ -206,7 +206,23 @@ body.plataforma { background: var(--gray-light); }
   .topbar h1 { font-size: 1.15rem; }
   .topbar-user span { display: none; }
   .topbar-user span#rolBadge { display: inline-flex; }
+
+  .item-row { flex-wrap: wrap; }
+  .item-row-info { flex-basis: 100%; order: 2; }
+  .item-row > .btn { order: 3; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .link-copy-box input { min-width: 0; flex-basis: 100%; }
 }
+
+/* ============ SELECTOR DE COLOR DE ACENTO (personalización de página) ============ */
+.color-picker-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.color-swatch {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 3px solid transparent; cursor: pointer;
+  transition: all .2s var(--transition); padding: 0;
+}
+.color-swatch:hover { transform: scale(1.1); }
+.color-swatch.selected { border-color: var(--dark); box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--dark); }
 
 /* ============ PANEL DESTACADO (link de página personal) ============ */
 .panel-highlight {

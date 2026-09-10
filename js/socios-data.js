@@ -11,6 +11,8 @@ const SOCIOS_DB = {
     ciudad: "Bucaramanga",
     negocio: "Trámites JP",
     descripcion: "Especialistas en trámites de tránsito con más de 10 años de experiencia en el Área Metropolitana.",
+    bio: "Te ayudo a resolver tu trámite de tránsito rápido y sin filas, con atención personalizada de principio a fin.",
+    colorAcento: "#0a7d3e",
     servicios: [
       { id: 1, nombre: "Traspaso de vehículo", precio: "Desde $150.000" },
       { id: 2, nombre: "Matrícula inicial", precio: "Desde $180.000" },

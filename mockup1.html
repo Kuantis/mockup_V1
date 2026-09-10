@@ -20,7 +20,8 @@
     <nav>
       <a href="index.html"><i class="fa-solid fa-house"></i> Inicio</a>
       <a href="#directorio"><i class="fa-solid fa-users"></i> Directorio</a>
-      <a href="#blog"><i class="fa-solid fa-newspaper"></i> Blog</a>
+      <a href="#noticias"><i class="fa-solid fa-satellite-dish"></i> Noticias</a>
+      <a href="#blog"><i class="fa-solid fa-newspaper"></i> Eventos</a>
       <a href="#contacto"><i class="fa-solid fa-envelope"></i> Contacto</a>
       <a href="comparacion.html"><i class="fa-solid fa-chart-line"></i> Comparación</a>
       <a href="mockup2.html" class="btn btn-primary btn-sm"><i class="fa-solid fa-right-to-bracket"></i> Acceso Socios</a>
@@ -73,6 +74,22 @@
   </div>
 </section>
 
+
+<!-- BANNER DE NOTICIAS DE TRÁNSITO Y MOVILIDAD -->
+<section class="noticias-banner" id="noticias">
+  <div class="container">
+    <div class="noticias-header">
+      <h2><i class="fa-solid fa-newspaper"></i> Noticias de tránsito y movilidad en Colombia</h2>
+      <span class="noticias-live"><i class="fa-solid fa-satellite-dish"></i> Actualizado en vivo</span>
+    </div>
+    <div class="noticias-track" id="noticiasTrack">
+      <div class="noticia-skel"></div>
+      <div class="noticia-skel"></div>
+      <div class="noticia-skel"></div>
+    </div>
+  </div>
+</section>
+
 <!-- DIRECTORIO -->
 <section class="directorio container" id="directorio">
   <div class="directorio-header">
@@ -87,45 +104,18 @@
   </p>
 </section>
 
-<!-- BLOG -->
+<!-- EVENTOS Y ENCUENTROS -->
 <section class="blog container" id="blog">
-  <h2><i class="fa-solid fa-newspaper"></i> Blog de Eventos y Encuentros</h2>
-  <div class="grid-blog">
-    <article class="blog-card">
-      <div class="blog-img" style="background: linear-gradient(135deg,#0a7d3e,#05602c);">
-        <i class="fa-solid fa-people-group"></i>
-      </div>
-      <div class="blog-body">
-        <span class="badge badge-orange">Encuentro</span>
-        <h3>Encuentro Regional de Tramitadores 2025</h3>
-        <p>Más de 80 socios se reunieron para discutir nuevas normativas del RUNT y las mejoras del gremio.</p>
-        <span class="blog-date"><i class="fa-regular fa-calendar"></i> 15 de marzo, 2025</span>
-      </div>
-    </article>
-    <article class="blog-card">
-      <div class="blog-img" style="background: linear-gradient(135deg,#f5a623,#d68910);">
-        <i class="fa-solid fa-graduation-cap"></i>
-      </div>
-      <div class="blog-body">
-        <span class="badge badge-orange">Capacitación</span>
-        <h3>Capacitación Virtual sobre RUNT 2.0</h3>
-        <p>Jornada de formación para socios sobre las nuevas actualizaciones del sistema y buenas prácticas.</p>
-        <span class="blog-date"><i class="fa-regular fa-calendar"></i> 02 de febrero, 2025</span>
-      </div>
-    </article>
-    <article class="blog-card">
-      <div class="blog-img" style="background: linear-gradient(135deg,#0f172a,#1e293b);">
-        <i class="fa-solid fa-handshake"></i>
-      </div>
-      <div class="blog-body">
-        <span class="badge badge-orange">Asamblea</span>
-        <h3>Asamblea General Ordinaria 2025</h3>
-        <p>Rendición de cuentas, elección de junta directiva y presentación del plan estratégico anual.</p>
-        <span class="blog-date"><i class="fa-regular fa-calendar"></i> 20 de enero, 2025</span>
-      </div>
-    </article>
-  </div>
+  <h2><i class="fa-solid fa-newspaper"></i> Eventos y Encuentros</h2>
+  <div class="grid-blog" id="gridEventos"></div>
 </section>
+
+<!-- MODAL DETALLE DE EVENTO -->
+<div class="modal-overlay" id="modalEvento">
+  <div class="modal">
+    <div id="modalEventoContenido"></div>
+  </div>
+</div>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modalSocio">
@@ -133,15 +123,6 @@
     <div id="modalContenido"></div>
   </div>
 </div>
-
-<!-- BOTÓN FLOTANTE WHATSAPP INSTITUCIONAL -->
-<a href="https://wa.me/573193053012?text=Hola%20buen%20d%C3%ADa%2C%20vengo%20desde%20la%20p%C3%A1gina%20de%20ASOTR%C3%81NSITO%20AMB%20y%20quisiera%20m%C3%A1s%20informaci%C3%B3n."
-   target="_blank"
-   class="whatsapp-float"
-   aria-label="Contactar por WhatsApp">
-  <i class="fa-brands fa-whatsapp"></i>
-  <span class="whatsapp-float-text">¿Necesitas ayuda?</span>
-</a>
 
 <!-- FOOTER -->
 <footer class="main-footer" id="contacto">
@@ -153,7 +134,7 @@
     <div>
       <h4>Secciones</h4>
       <a href="#directorio">Directorio de Socios</a>
-      <a href="#blog">Blog de Eventos</a>
+      <a href="#blog">Eventos y Encuentros</a>
       <a href="mockup2.html">Acceso Socios</a>
     </div>
     <div>
@@ -178,6 +159,7 @@
   </div>
 </div>
 
+<script src="js/eventos-data.js"></script>
 <script src="js/mockup1.js"></script>
 </body>
 </html>

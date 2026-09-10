@@ -5,7 +5,7 @@ const WHATSAPP_ASOCIACION = "573193053012"; // +57 319 305 3012 (sin + ni espaci
 const socios = [
   {
     id: 1, nombre: "Juan Pérez", negocio: "Trámites JP",
-    ciudad: "Bucaramanga", rating: 4.8,
+    ciudad: "Bucaramanga",
     tramites: ["Traspaso", "Matrícula", "Duplicados"],
     telefono: "300 123 4567",
     email: "juan@tramitesjp.com",
@@ -17,7 +17,7 @@ const socios = [
   },
   {
     id: 2, nombre: "María Gómez", negocio: "Gestoría MG",
-    ciudad: "Floridablanca", rating: 4.9,
+    ciudad: "Floridablanca",
     tramites: ["Traspaso", "Licencia", "Comparendos"],
     telefono: "315 987 6543",
     email: "maria@gestoriamg.co",
@@ -26,7 +26,7 @@ const socios = [
   },
   {
     id: 3, nombre: "Carlos Ruiz", negocio: "AutoTrámites CR",
-    ciudad: "Girón", rating: 4.7,
+    ciudad: "Girón",
     tramites: ["Matrícula", "Comparendos"],
     telefono: "320 555 1212",
     email: "carlos@autotramites.com",
@@ -35,7 +35,7 @@ const socios = [
   },
   {
     id: 4, nombre: "Ana Martínez", negocio: "Soluciones Viales AM",
-    ciudad: "Piedecuesta", rating: 5.0,
+    ciudad: "Piedecuesta",
     tramites: ["Traspaso", "Matrícula", "Licencia"],
     telefono: "317 444 8899",
     email: "ana@solucionesviales.co",
@@ -47,7 +47,7 @@ const socios = [
   },
   {
     id: 5, nombre: "Luis Rodríguez", negocio: "Trámites LR Express",
-    ciudad: "Bucaramanga", rating: 4.6,
+    ciudad: "Bucaramanga",
     tramites: ["Traspaso", "Comparendos"],
     telefono: "310 777 2233",
     email: "luis@lrexpress.com",
@@ -56,7 +56,7 @@ const socios = [
   },
   {
     id: 6, nombre: "Paola Herrera", negocio: "Asesoría Vial PH",
-    ciudad: "Floridablanca", rating: 4.9,
+    ciudad: "Floridablanca",
     tramites: ["Matrícula", "Licencia", "Duplicados"],
     telefono: "318 222 4455",
     email: "paola@asesoriavh.co",
@@ -95,6 +95,18 @@ function avatarUrl(nombre) {
   return `https://ui-avatars.com/api/?name=${encodeURIComponent(nombre)}&background=0a7d3e&color=fff&size=300&bold=true&font-size=0.4`;
 }
 
+/* ============ MAPA DE GOOGLE (embed público por dirección, sin API key) ============ */
+function mapaEmbedUrl(direccion) {
+  return `https://www.google.com/maps?q=${encodeURIComponent(direccion)}&output=embed`;
+}
+function mapaSedeHTML(direccion) {
+  return `
+    <div class="mapa-sede">
+      <iframe src="${mapaEmbedUrl(direccion)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación: ${direccion}"></iframe>
+    </div>
+  `;
+}
+
 /* ============ RENDER CARDS ============ */
 function renderSocios(lista) {
   const grid = document.getElementById('gridSocios');
@@ -115,7 +127,6 @@ function renderSocios(lista) {
       <div class="card-socio-img" style="background-image: url('${avatarUrl(s.nombre)}');">
         <span class="card-ciudad"><i class="fa-solid fa-location-dot"></i> ${s.ciudad}</span>
         <span class="card-verified" title="Socio verificado"><i class="fa-solid fa-check"></i></span>
-        <span class="card-rating"><i class="fa-solid fa-star"></i> ${s.rating}</span>
       </div>
       <div class="card-socio-body">
         <h3>${s.nombre}</h3>
@@ -205,13 +216,16 @@ function abrirModal(id) {
       <div class="modal-section">
         <h3><i class="fa-solid fa-location-dot"></i> Sedes (${s.sedes.length})</h3>
         ${s.sedes.map(sd => `
-          <div class="sede-item">
-            <i class="fa-solid fa-building"></i>
-            <div>
-              <strong>${sd.nombre}</strong>
-              <small>${sd.dir}</small><br>
-              <small><i class="fa-regular fa-clock"></i> ${sd.horario}</small>
+          <div class="sede-item" style="flex-direction:column;align-items:stretch;">
+            <div style="display:flex;gap:14px;align-items:flex-start;">
+              <i class="fa-solid fa-building"></i>
+              <div>
+                <strong>${sd.nombre}</strong>
+                <small>${sd.dir}</small><br>
+                <small><i class="fa-regular fa-clock"></i> ${sd.horario}</small>
+              </div>
             </div>
+            ${mapaSedeHTML(sd.dir)}
           </div>
         `).join('')}
       </div>
@@ -277,8 +291,156 @@ document.getElementById('modalSocio').addEventListener('click', e => {
 });
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') cerrarModal();
+  if (e.key !== 'Escape') return;
+  cerrarModal();
+  cerrarModalEvento();
+});
+
+/* ============ BANNER DE NOTICIAS DE TRÁNSITO Y MOVILIDAD ============
+   Fuente: Google News RSS (público, sin API key) filtrado por Colombia + tránsito/movilidad,
+   convertido a JSON vía rss2json.com (capa gratuita) para poder consumirlo desde el navegador
+   sin backend propio — compatible con hosting estático (GitHub Pages). */
+const NOTICIAS_RSS_URL = 'https://news.google.com/rss/search?q=transito%20movilidad%20Colombia&hl=es-419';
+const NOTICIAS_API = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(NOTICIAS_RSS_URL)}`;
+
+function formatearFechaNoticia(fechaISO) {
+  const d = new Date(fechaISO);
+  if (isNaN(d)) return '';
+  return d.toLocaleDateString('es-CO', { day: 'numeric', month: 'short' });
+}
+
+async function cargarNoticiasTransito() {
+  const track = document.getElementById('noticiasTrack');
+  if (!track) return;
+  try {
+    const res = await fetch(NOTICIAS_API);
+    if (!res.ok) throw new Error('Respuesta no válida del servicio de noticias');
+    const data = await res.json();
+    if (data.status !== 'ok' || !data.items || !data.items.length) throw new Error('Sin noticias disponibles');
+
+    track.innerHTML = data.items.slice(0, 8).map(item => `
+      <a class="noticia-card" href="${item.link}" target="_blank" rel="noopener noreferrer">
+        <span class="noticia-fuente"><i class="fa-solid fa-satellite-dish"></i> ${(item.author || 'Noticias Colombia')}</span>
+        <h3>${item.title}</h3>
+        <span class="noticia-fecha"><i class="fa-regular fa-calendar"></i> ${formatearFechaNoticia(item.pubDate)}</span>
+      </a>
+    `).join('');
+  } catch (err) {
+    track.innerHTML = `<p class="noticias-error"><i class="fa-solid fa-circle-info"></i> No se pudieron cargar las noticias en este momento. Intenta recargar la página.</p>`;
+  }
+}
+
+/* ============ EVENTOS Y ENCUENTROS ============
+   Los datos vienen de js/eventos-data.js (cargarEventos), publicados desde el panel
+   de administración — lo que el admin publica ahí aparece aquí automáticamente. */
+function renderEventos() {
+  const grid = document.getElementById('gridEventos');
+  if (!grid) return;
+  const eventos = cargarEventos();
+
+  if (!eventos.length) {
+    grid.innerHTML = '<p class="sin-resultados"><i class="fa-solid fa-circle-info"></i> Aún no hay eventos publicados.</p>';
+    return;
+  }
+
+  grid.innerHTML = eventos.map((e, idx) => {
+    const fotos = e.imagenes && e.imagenes.length ? e.imagenes : null;
+    return `
+    <article class="blog-card" onclick="abrirModalEvento(${e.id})">
+      <div class="blog-img-carrusel" data-evento-idx="${idx}">
+        ${fotos ? `
+          <div class="carrusel-track">
+            ${fotos.map(url => `<img src="${url}" alt="" loading="lazy">`).join('')}
+          </div>
+          ${fotos.length > 1 ? `
+            <button class="carrusel-btn carrusel-prev" onclick="moverCarrusel(event, ${idx}, -1)" aria-label="Foto anterior"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="carrusel-btn carrusel-next" onclick="moverCarrusel(event, ${idx}, 1)" aria-label="Foto siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+            <div class="carrusel-dots">${fotos.map((_, i) => `<span class="carrusel-dot ${i === 0 ? 'active' : ''}"></span>`).join('')}</div>
+          ` : ''}
+        ` : `<div class="blog-img" style="background: linear-gradient(135deg,#0a7d3e,#05602c);"><i class="fa-solid fa-calendar-check"></i></div>`}
+      </div>
+      <div class="blog-body">
+        <span class="badge badge-orange">${e.categoria || 'Noticia'}</span>
+        <h3>${e.titulo}</h3>
+        <p>${e.texto || ''}</p>
+        <span class="blog-date"><i class="fa-regular fa-calendar"></i> ${e.fecha}</span>
+      </div>
+    </article>
+  `;
+  }).join('');
+}
+
+function moverCarrusel(evt, idx, direccion) {
+  evt.stopPropagation();
+  const carrusel = document.querySelector(`.blog-img-carrusel[data-evento-idx="${idx}"]`);
+  if (!carrusel) return;
+  const track = carrusel.querySelector('.carrusel-track');
+  const dots = carrusel.querySelectorAll('.carrusel-dot');
+  const total = dots.length;
+  let actual = parseInt(carrusel.dataset.pos || '0', 10);
+  actual = (actual + direccion + total) % total;
+  carrusel.dataset.pos = actual;
+  track.style.transform = `translateX(-${actual * 100}%)`;
+  dots.forEach((d, i) => d.classList.toggle('active', i === actual));
+}
+
+function abrirModalEvento(id) {
+  const eventos = cargarEventos();
+  const e = eventos.find(x => x.id === id);
+  if (!e) return;
+
+  e.vistas = (e.vistas || 0) + 1;
+  guardarEventos(eventos);
+
+  const fotos = e.imagenes && e.imagenes.length ? e.imagenes : [];
+
+  document.getElementById('modalEventoContenido').innerHTML = `
+    ${fotos.length ? `
+      <div class="modal-hero modal-hero-galeria">
+        <button class="modal-close" onclick="cerrarModalEvento()" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+        <img src="${fotos[0]}" alt="" id="modalEventoImgPrincipal">
+      </div>
+      ${fotos.length > 1 ? `
+        <div class="modal-galeria-thumbs">
+          ${fotos.map((url, i) => `<img src="${url}" alt="" class="${i === 0 ? 'active' : ''}" onclick="cambiarFotoModal('${url}', this)">`).join('')}
+        </div>
+      ` : ''}
+    ` : `
+      <div class="modal-hero" style="background:linear-gradient(135deg,#0a7d3e,#05602c);">
+        <button class="modal-close" onclick="cerrarModalEvento()" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+    `}
+
+    <div class="modal-body">
+      <span class="badge badge-orange">${e.categoria || 'Noticia'}</span>
+      <h2 style="margin:12px 0 6px;">${e.titulo}</h2>
+      <span class="blog-date"><i class="fa-regular fa-calendar"></i> ${e.fecha} · Por ${e.autor} · 👁 ${e.vistas} vistas</span>
+      <p style="margin-top:16px; color:var(--gray); line-height:1.6;">${e.texto || ''}</p>
+      ${e.video ? `<p style="margin-top:14px;"><a href="${e.video}" target="_blank" class="btn btn-outline btn-sm"><i class="fa-solid fa-circle-play"></i> Ver video</a></p>` : ''}
+      ${e.link ? `<p style="margin-top:10px;"><a href="${e.link}" target="_blank" class="btn btn-outline btn-sm"><i class="fa-solid fa-link"></i> Enlace relacionado</a></p>` : ''}
+    </div>
+  `;
+
+  document.getElementById('modalEvento').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function cambiarFotoModal(url, thumbEl) {
+  document.getElementById('modalEventoImgPrincipal').src = url;
+  thumbEl.parentElement.querySelectorAll('img').forEach(t => t.classList.remove('active'));
+  thumbEl.classList.add('active');
+}
+
+function cerrarModalEvento() {
+  document.getElementById('modalEvento').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('modalEvento').addEventListener('click', e => {
+  if (e.target.id === 'modalEvento') cerrarModalEvento();
 });
 
 /* ============ INIT ============ */
 renderSocios(socios);
+renderEventos();
+cargarNoticiasTransito();

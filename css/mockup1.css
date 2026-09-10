@@ -76,13 +76,6 @@
   border-radius: var(--radius-pill); font-size: .74rem; font-weight: 700;
   z-index: 2; display: flex; align-items: center; gap: 4px;
 }
-.card-rating {
-  position: absolute; bottom: 12px; right: 12px;
-  background: rgba(255,255,255,.95); backdrop-filter: blur(8px);
-  color: #f59e0b; padding: 4px 10px; border-radius: var(--radius-pill);
-  font-size: .78rem; font-weight: 700; z-index: 2;
-  display: flex; align-items: center; gap: 4px;
-}
 .card-verified {
   position: absolute; top: 14px; right: 14px;
   background: var(--accent); color: #fff;
@@ -127,7 +120,7 @@
 }
 .blog-card {
   background: #fff; border-radius: var(--radius);
-  overflow: hidden; box-shadow: var(--shadow-sm);
+  overflow: hidden; box-shadow: var(--shadow-sm); cursor: pointer;
   transition: all .3s var(--transition); border: 1px solid var(--border);
 }
 .blog-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
@@ -135,6 +128,28 @@
   height: 160px; display: flex; align-items: center; justify-content: center;
   color: #fff; font-size: 3rem; position: relative;
 }
+
+/* Carrusel de fotos por evento (varias imágenes, navegación con flechas y puntos) */
+.blog-img-carrusel { height: 160px; position: relative; overflow: hidden; background: var(--gray-light); }
+.carrusel-track { display: flex; height: 100%; transition: transform .35s var(--transition); }
+.carrusel-track img { width: 100%; height: 100%; object-fit: cover; flex-shrink: 0; }
+.carrusel-btn {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 30px; height: 30px; border-radius: 50%; border: none;
+  background: rgba(15,23,42,.55); color: #fff; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .8rem; transition: background .2s; z-index: 2;
+}
+.carrusel-btn:hover { background: rgba(15,23,42,.8); }
+.carrusel-prev { left: 8px; }
+.carrusel-next { right: 8px; }
+.carrusel-dots {
+  position: absolute; bottom: 8px; left: 0; right: 0;
+  display: flex; justify-content: center; gap: 5px; z-index: 2;
+}
+.carrusel-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.55); transition: background .2s; }
+.carrusel-dot.active { background: #fff; }
+
 .blog-body { padding: 22px; }
 .blog-body h3 { font-size: 1.08rem; margin: 12px 0; font-weight: 700; letter-spacing: -.01em; line-height: 1.35; }
 .blog-body p { font-size: .88rem; color: var(--gray); margin-bottom: 14px; line-height: 1.55; }
@@ -182,6 +197,20 @@
 }
 .modal-hero-info h2 { font-size: 1.6rem; font-weight: 800; letter-spacing: -.02em; }
 .modal-hero-info p { opacity: .9; font-size: .95rem; }
+
+/* Galería de fotos del evento dentro del modal de detalle */
+.modal-hero-galeria::after { content: none; }
+.modal-hero-galeria img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.modal-galeria-thumbs {
+  display: flex; gap: 8px; padding: 14px 25px 0; overflow-x: auto;
+}
+.modal-galeria-thumbs img {
+  width: 64px; height: 64px; object-fit: cover; border-radius: 10px;
+  cursor: pointer; flex-shrink: 0; border: 2px solid transparent;
+  transition: border-color .2s; opacity: .75;
+}
+.modal-galeria-thumbs img:hover { opacity: 1; }
+.modal-galeria-thumbs img.active { border-color: var(--primary); opacity: 1; }
 
 .modal-body { padding: 25px; }
 
@@ -263,4 +292,70 @@
 }
 @media (max-width: 500px) {
   .card-actions { grid-template-columns: 1fr; }
+}
+
+/* ============ BANNER DE NOTICIAS DE TRÁNSITO Y MOVILIDAD ============ */
+.noticias-banner {
+  padding: 40px 24px 10px;
+}
+.noticias-header {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap; margin-bottom: 18px;
+}
+.noticias-header h2 {
+  font-size: 1.3rem; font-weight: 800; color: var(--dark);
+  letter-spacing: -.02em; display: flex; align-items: center; gap: 10px;
+}
+.noticias-header h2 i { color: var(--primary); }
+.noticias-live {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: .78rem; font-weight: 600; color: var(--primary-dark);
+  background: var(--primary-light); padding: 5px 12px; border-radius: var(--radius-pill);
+}
+.noticias-live i { color: var(--accent-dark); animation: pulseLive 2.5s infinite; }
+@keyframes pulseLive {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .4; }
+}
+
+/* Mobile-first: fila deslizable con snap, se ve completa desde un teléfono */
+.noticias-track {
+  display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory;
+  padding-bottom: 14px; -webkit-overflow-scrolling: touch;
+}
+.noticias-track::-webkit-scrollbar { height: 6px; }
+.noticias-track::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+.noticia-card, .noticia-skel {
+  flex: 0 0 82%; scroll-snap-align: start;
+  background: #fff; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 16px; text-decoration: none; color: inherit;
+  transition: all .2s var(--transition); display: block;
+}
+.noticia-card:hover { border-color: var(--primary); box-shadow: var(--shadow); transform: translateY(-2px); }
+.noticia-card .noticia-fuente {
+  display: flex; align-items: center; gap: 6px;
+  font-size: .74rem; font-weight: 700; color: var(--primary);
+  text-transform: uppercase; letter-spacing: .03em; margin-bottom: 8px;
+}
+.noticia-card h3 {
+  font-size: .95rem; font-weight: 700; color: var(--dark);
+  line-height: 1.4; margin-bottom: 10px;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.noticia-card .noticia-fecha { font-size: .78rem; color: var(--gray); }
+
+.noticia-skel {
+  height: 130px; background: linear-gradient(90deg, var(--gray-light) 25%, #eef1f5 37%, var(--gray-light) 63%);
+  background-size: 400% 100%; animation: skelPulse 1.4s ease infinite;
+}
+@keyframes skelPulse { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
+
+.noticias-error {
+  color: var(--gray); font-size: .9rem; padding: 20px;
+  background: var(--gray-light); border-radius: var(--radius-sm); flex: 1;
+}
+
+@media (min-width: 640px) {
+  .noticia-card, .noticia-skel { flex: 0 0 340px; }
 }

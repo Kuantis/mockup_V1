@@ -1,16 +1,40 @@
 /* ============ PÁGINA PERSONAL DE SOCIO (LANDING PÚBLICA) ============ */
 .perfil-body { background: var(--gray-light); }
 
+/* Header limpio: sin franja de color, el avatar y el acento hacen todo el trabajo */
 .perfil-hero {
   text-align: center;
-  padding: 60px 24px 40px;
-  background: linear-gradient(135deg, var(--primary-light), #fff);
+  padding: 48px 24px 40px;
+  background: #fff;
   border-bottom: 1px solid var(--border);
 }
 .perfil-avatar {
-  width: 96px; height: 96px; border-radius: 50%;
-  margin: 0 auto 18px; box-shadow: var(--shadow-lg);
-  border: 4px solid #fff;
+  width: 108px; height: 108px; border-radius: 50%;
+  margin: 0 auto 16px; box-shadow: var(--shadow);
+  border: 3px solid var(--avatar-border, var(--primary-light));
+  padding: 3px;
+}
+
+/* Insignia de acreditación institucional */
+.perfil-acreditado {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: #fff; border: 1px solid var(--border);
+  padding: 6px 14px 6px 8px; border-radius: var(--radius-pill);
+  font-size: .8rem; font-weight: 700; color: var(--dark);
+  box-shadow: var(--shadow-sm); margin-bottom: 14px;
+}
+.perfil-acreditado .acreditado-icon {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--primary); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .68rem; flex-shrink: 0;
+}
+.perfil-acreditado span { color: var(--gray); font-weight: 500; }
+.perfil-acreditado strong { color: var(--primary-dark); }
+
+.perfil-bio {
+  max-width: 520px; margin: 0 auto 14px; font-size: .98rem;
+  font-weight: 600; font-style: italic; line-height: 1.5;
 }
 .perfil-hero h1 {
   font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800;
@@ -52,7 +76,6 @@
   display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px;
 }
 .perfil-sede-card {
-  display: flex; align-items: flex-start; gap: 12px;
   background: #fff; border: 1px solid var(--border); border-radius: var(--radius-sm);
   padding: 16px;
 }
@@ -78,9 +101,19 @@
 .perfil-ejemplo a { color: var(--primary); font-weight: 600; }
 
 .perfil-footer {
-  text-align: center; padding: 30px 20px; color: var(--gray); font-size: .85rem;
+  text-align: center; padding: 40px 20px; margin-top: 20px;
+  background: #fff; border-top: 1px solid var(--border);
+}
+.perfil-footer-logo {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-weight: 800; font-size: 1.05rem; color: var(--primary);
+  letter-spacing: -.02em; margin-bottom: 8px;
+}
+.perfil-footer-logo i { font-size: 1.3rem; }
+.perfil-footer p {
+  color: var(--gray); font-size: .88rem; max-width: 420px; margin: 0 auto;
 }
 .perfil-footer a {
-  display: inline-flex; align-items: center; gap: 6px; margin-top: 8px;
-  color: var(--primary); text-decoration: none; font-weight: 600;
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 14px;
+  color: var(--primary); text-decoration: none; font-weight: 600; font-size: .88rem;
 }

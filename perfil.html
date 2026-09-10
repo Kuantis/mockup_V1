@@ -21,7 +21,8 @@
 </div>
 
 <footer class="perfil-footer">
-  <p>Página generada automáticamente por la Plataforma Interna de <strong>ASOTRÁNSITO AMB</strong></p>
+  <div class="perfil-footer-logo"><i class="fa-solid fa-car-side"></i> ASOTRÁNSITO AMB</div>
+  <p>Miembro acreditado de la Asociación de Tramitadores de Tránsito y Transporte del Área Metropolitana de Bucaramanga.</p>
   <a href="index.html"><i class="fa-solid fa-house"></i> Ver todo el proyecto</a>
 </footer>
 
@@ -38,6 +39,10 @@
 function abrirWhatsAppSocio(numero, negocio) {
   const msg = `Hola, buen día. Vi tu página de ${negocio} en ASOTRÁNSITO AMB y quisiera más información.`;
   window.open(`https://wa.me/57${numero}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function mapaEmbedUrl(direccion) {
+  return `https://www.google.com/maps?q=${encodeURIComponent(direccion)}&output=embed`;
 }
 
 (function renderPerfil() {
@@ -58,11 +63,18 @@ function abrirWhatsAppSocio(numero, negocio) {
     return;
   }
 
+  const acento = socio.colorAcento || '#0a7d3e';
+
   cont.innerHTML = `
-    <header class="perfil-hero">
-      <img class="perfil-avatar" src="https://ui-avatars.com/api/?name=${encodeURIComponent(socio.negocio)}&background=0a7d3e&color=fff&size=128" alt="">
+    <header class="perfil-hero" style="--avatar-border:${acento};">
+      <img class="perfil-avatar" src="https://ui-avatars.com/api/?name=${encodeURIComponent(socio.negocio)}&background=${acento.replace('#','')}&color=fff&size=128" alt="">
+      <div class="perfil-acreditado">
+        <span class="acreditado-icon"><i class="fa-solid fa-check"></i></span>
+        <span>Miembro acreditado de <strong>ASOTRÁNSITO AMB</strong></span>
+      </div>
       <h1>${socio.negocio}</h1>
       <p class="perfil-nombre-socio"><i class="fa-solid fa-user"></i> ${socio.nombre} · <i class="fa-solid fa-location-dot"></i> ${socio.ciudad}</p>
+      ${socio.bio ? `<p class="perfil-bio" style="color:${acento};">"${socio.bio}"</p>` : ''}
       <p class="perfil-descripcion">${socio.descripcion}</p>
       <button class="btn btn-whatsapp btn-lg" onclick="abrirWhatsAppSocio('${socio.redes.whatsapp}', '${socio.negocio.replace(/'/g, "\\'")}')">
         <i class="fa-brands fa-whatsapp"></i> Escribir por WhatsApp
@@ -89,11 +101,16 @@ function abrirWhatsAppSocio(numero, negocio) {
       <div class="perfil-sedes">
         ${socio.sedes.map(s => `
           <div class="perfil-sede-card">
-            <i class="fa-solid fa-building"></i>
-            <div>
-              <strong>${s.nombre}</strong>
-              <small>${s.dir}</small>
-              <small><i class="fa-regular fa-clock"></i> ${s.horario}</small>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <i class="fa-solid fa-building"></i>
+              <div>
+                <strong>${s.nombre}</strong>
+                <small>${s.dir}</small>
+                <small><i class="fa-regular fa-clock"></i> ${s.horario}</small>
+              </div>
+            </div>
+            <div class="mapa-sede">
+              <iframe src="${mapaEmbedUrl(s.dir)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación: ${s.dir}"></iframe>
             </div>
           </div>
         `).join('')}
